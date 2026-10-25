@@ -9,8 +9,12 @@ export default function Menu({ show, stagger, activeName, onPreview, onLeave, on
                     className={item.name === activeName ? 'opt active' : 'opt'}
                     href={item.href}
                     style={stagger ? { transitionDelay: i * 90 + 'ms' } : undefined}
-                    onMouseEnter={() => onPreview(item.name)}
-                    onFocus={() => onPreview(item.name)}
+                    onPointerEnter={e => {
+                        if (e.pointerType === 'mouse') onPreview(item.name);
+                    }}
+                    onFocus={e => {
+                        if (e.currentTarget.matches(':focus-visible')) onPreview(item.name);
+                    }}
                     onMouseLeave={onLeave}
                     onBlur={onLeave}
                     onClick={e => {
